@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="Styles/ApplicationStyle.css" />
+    <style type="text/css">
+        #selectDate {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            color:#333333;
+            font-weight:bold;
+            border-radius:3px;
+            background-color:silver;
+            
+        }
+
+        #divTableHolder {
+            text-align: center;
+            margin-top:5px;
+            height: 20%;
+            overflow-y:auto;
+        }
+
+        .tblData {
+            width: 98%;
+            margin-top:12px;
+            text-align: center;
+            border-collapse: collapse;
+            color:white;
+            font-weight:bold;
+            font-size:14px;
+        }
+
+        .tblData td {
+            text-align: center;
+            border: 1px solid white;
+            padding:5px;
+            height:25px;
+            margin-top:5px;
+        }
+
+        .tblData tr:first-child th:first-child {
+            background-color: #0076D3;
+        }
+
+        .tblData tr:first-child th:nth-child(2) {
+            background-color: #428DCB;
+        }
+
+        .tblData tr:first-child th:nth-child(3) {
+            background-color: #1E93DF;
+        }
+
+        .tblData tr:first-child th:nth-child(3) {
+            background-color: #0055BA;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+</head>
+<body>
+    
+    <div class="header">Table</div>
+    <div class="content">
+        <div style="text-align:center;margin-top:20%;">
+            <select id="selectDate"></select>
+            <div id="divTableHolder"></div>
+        </div>
+    </div>
+    <div class="footer">
+        <div>Timer</div>
+        <div>Graph</div>
+        <div style="background-color:#333333;">Table</div>
+        <div>Settings</div>
+    </div>
+    <script type="text/javascript">
+        var arrMonth = ["January", "February", "March", "Aprril", "May", "June", "Jule", "August", "September", "Octobet", "November", "December"];
+        jQuery(document).ready(function () {
+            //init date select
+            initDateSelect();
+        });
+
+        function initDateSelect() {
+            jQuery.ajax({
+                url: "Handler1.ashx",
+                data: { type: "monthAndYearHistory" },
+                cache: false,
+                success: function (data, textStatus, jqXHR) {
+                    if (jqXHR.responseText) {
+                        var arrMonthYearHistory = jQuery.parseJSON(jqXHR.responseText);
+                        var select = document.getElementById("selectDate");
+                        if (arrMonthYearHistory && arrMonthYearHistory.length > 0) {
+                            for (var i = 0; i < arrMonthYearHistory.length; i++) {
+                                var option = document.createElement("option");
+                                option.value = arrMonthYearHistory[i].Year + "~" + arrMonthYearHistory[i].Month;
+                                option.text = arrMonth[parseInt(arrMonthYearHistory[i].Month) - 1] + " " + arrMonthYearHistory[i].Year;
+                                selectDate.add(option);
+                            }
+
+                            showYearMonthWorkingDays(arrMonthYearHistory[0].Year, arrMonthYearHistory[0].Month);
+                        }
+                    } else {
+                        //no data
+                    }
+                }
+            });
+        }
+
+        jQuery("#selectDate").on("change", function () {
+            var arr = this.options[this.selectedIndex].value.split('~');
+            showYearMonthWorkingDays(arr[0], arr[1]);
+        });
+
+        function showYearMonthWorkingDays(yearSelected, monthSelected){
+            jQuery.ajax({
+                url: "Handler1.ashx",
+                data: { type: "getDataForTable", year: yearSelected, month: monthSelected },
+                cache: false,
+                success: function (data, textStatus, jqXHR) {
+                    if (jqXHR.responseText) {
+                        var tableData = jQuery.parseJSON(jqXHR.responseText);
+                        
+                        if(tableData && tableData.length > 0){
+                            var strTable = "<table class='tblData'><tr><th>DATE</th><th>START</th><th>END</th><th>TOTAL</th></tr>";
+                            for (var i = 0; i < tableData.length; i++) {
+                                var tr = "<tr><td>~date~</td><td>~start~</td><td>~end~</td><td>~total~</td></tr>".replace("~date~", tableData[i].Date).replace("~start~", tableData[i].Start).replace("~end~", tableData[i].CheckoutTime).replace("~total~", tableData[i].Total);
+                                strTable += tr;
+                            }
+
+                            strTable += "</table>";
+                            document.getElementById("divTableHolder").innerHTML = strTable;
+                        }
+                    }
+                }
+
+            });
+        }
+
+    </script>
+</body>
+</html>

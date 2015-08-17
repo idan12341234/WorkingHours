@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+	<meta http-equiv ="Content-type"  content="text/html; charset=utf-8"   />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="Styles/AppTheme.css" />
+    <script type="text/javascript" src="Scripts/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="Scripts/AppLogic.js"></script>
+        <style type="text/css">
+		.left { float: left; }
+		.right { float: right; }
+		.bold { font-weight: bold; }
+		.pressed { background-color: #393939; }
+		.main_content .hour_title { padding-top: 5%; font-size: 22px; }
+		.main_content .check-con { position: relative; }
+		.main_content .check-bg { width: 190px; height: 199px; background-image: url(Images/check_bg2.png); background-repeat: no-repeat; /*background-size: 190px 199px;*/ margin: 4% auto; }
+		.main_content .check-bg.active { -webkit-animation: spin 3s linear ; -moz-animation: spin 3s linear ; animation: spin 3s linear ; }
+		.main_content .circle { width: 120px; height: 120px; border-radius: 50%; border: 4px solid #ffffff; box-shadow: 0 0 0 4px #717376; background-color: #0459bc; position: absolute; left: 50%; top: 50%; margin-left: -66px; margin-top: -60px; z-index: 10; }
+		.main_content .circle .circle_text { width: 70%; font-size: 24px; line-height: 25px; font-weight: 600; margin: auto; margin-top: 33%; }
+		.main_content .display_hour { width: 40%; height: 7%; margin: auto; font-size:20px;  }
+		.main_content .update_button { width: 40%; height: 7%; border: 1px solid #0055ba; background-color: #60b3e3; border-radius: 75px; margin: auto; line-height: 36px; margin-top:7%;}
+            
+		@-moz-keyframes spin {
+			100% { -moz-transform: rotate(360deg); }
+		}
+
+		@-webkit-keyframes spin {
+			100% { -webkit-transform: rotate(360deg); }
+		}
+
+		@keyframes spin {
+			100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+		}
+	</style>
+</head>
+<body>
+	<div class="wh_con">
+		<!--header-->
+		<header class="bold">Working Hours</header>
+		<!--main contentheader-->
+		<div class="main_content blue_gradient_white">
+			<div class="hour_title">MONDAY <b>13:45</b></div>
+			<!--<div class="check-bg">-->
+			<div class="check-con ">
+				<div class="check-bg"></div>
+				<div class="circle">
+					<div class="circle_text">
+						CHECK
+						IN
+					</div>
+				</div>
+			</div>
+			<!--</div>-->
+			<div class="display_hour">12:32</div>
+			<div class="update_button">UPDATE</div>
+		</div>
+		<!--footer-->
+		<div class="footer">
+			<div class="item pressed">
+				<div class="sprite timer"></div>
+				<div class="footer_text">TIMER</div>
+			</div>
+			<div class="item">
+				<div class="sprite graph"></div>
+				<div class="footer_text">GRAPH</div>
+			</div>
+			<div class="item">
+				<div class="sprite table"></div>
+				<div class="footer_text">TABLE</div>
+			</div>
+			<div class="item">
+				<div class="sprite settings"></div>
+				<div class="footer_text">SETTINGS</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function () {
+			clickAnimation();		
+		});
+
+		function clickAnimation() {
+			var circle = $(".circle"), checkbg = $(".check-bg");
+			circle.on("click", function () {
+				checkbg.addClass("active");
+			});
+		}
+
+		
+	</script>
+
+</body>
+</html>

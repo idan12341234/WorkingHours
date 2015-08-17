@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <meta http-equiv ="Content-type"  content="text/html; charset=utf-8"   />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="Styles/AppTheme.css" />
+    <script type="text/javascript" src="Scripts/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="Scripts/AppLogic.js"></script>
+    <script type="text/javascript" src="Scripts/Chart.js"></script>
+    <style type="text/css">
+        .main_content .hour_title {
+            padding-top: 2%;
+            font-size: 22px;
+        }
+
+        .divCanvas {
+            width:98%;
+            height:65%;
+            overflow-x:auto;
+            margin-top:10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="wh_con">
+        <!--header-->
+        <header class="bold">Working Hours</header>
+        <!--main contentheader-->
+        <div class="main_content blue_gradient_white">
+            <div class="hour_title"></div>
+            <div class="monthlist">
+                <div class="arrow bottom left"></div>
+                <div class="space left"></div>
+                <div class="monthname left">JUNE 2015</div>
+            </div>
+            <div class="list">
+                <ul>
+                    <li>January</li>
+                    <li>February</li>
+                    <li>March</li>
+                    <li>April</li>
+                    <li>May</li>
+                    <li>June</li>
+                    <li>July</li>
+                    <li>August</li>
+                    <li>September</li>
+                    <li>October</li>
+                    <li>November</li>
+                    <li>December</li>
+                </ul>
+            </div>
+            <div class="divCanvas">
+                <canvas id="canvasGraph" style="width:1200px;height:100%;"></canvas>
+            </div>
+        </div>
+        <!--footer-->
+        <div class="footer">
+            <div class="item pressed">
+                <div class="sprite timer"></div>
+                <div class="footer_text">TIMER</div>
+            </div>
+            <div class="item">
+                <div class="sprite graph"></div>
+                <div class="footer_text">GRAPH</div>
+            </div>
+            <div class="item">
+                <div class="sprite table"></div>
+                <div class="footer_text">TABLE</div>
+            </div>
+            <div class="item">
+                <div class="sprite settings"></div>
+                <div class="footer_text">SETTINGS</div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var ctx = null;
+        var chart = null;
+        var colors = ["rgba(0, 6, 161, 1)", "rgba(45, 69, 190, 1)", "rgba(0, 118, 211, 1)", "rgba(45, 129, 197, 1)"];
+        var arrGraphs = new Array(); //check if graph already loaded for this month if yes dont get it from this var
+
+        $(document).ready(function () {
+            initCanvas();
+            opendropdwon();
+        });
+
+        function initCanvas() {
+            ctx = document.getElementById("canvasGraph").getContext("2d");
+            
+            $.ajax({
+                url: "AppHandler.ashx",
+                data: { type: "getDataForGraph", month: 2, year: 2015 },
+                cache: false,
+                success: function (data, textStatus, jqXHR) {
+                    if (jqXHR.responseText) {
+                        var data = jQuery.parseJSON(jqXHR.responseText)[0];
+                        chart = new Chart(ctx).Bar(data);
+                        for (var i = 0; i < chart.datasets[0].bars.length; i++) {
+                            chart.datasets[0].bars[i].fillColor = colors[i % colors.length];
+                        }
+
+                        chart.update();
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert("error while trying to load the graph");
+                }
+            });
+        }
+
+        function opendropdwon() {
+            $(".arrow").on("click", function () {
+                $(".list").toggle();
+                if ($(".arrow .bottom")) {
+                    $(".arrow").removeClass("top").addClass("bottom");
+                }
+                else {
+                    $(".arrow").removeClass("bottom").addClass("top");
+                }
+
+            });
+        }
+    </script>
+</body>
+</html>

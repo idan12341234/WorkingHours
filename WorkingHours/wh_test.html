@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script type="text/javascript" src="Scripts/jquery-2.1.4.min.js"></script>
+</head>
+<body>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.ajax({
+                url: "AppHandler.ashx",
+                data: { type: "fillDBWithTestData" },
+                cache: false,
+                success: function (data, textStatus, jqXHR) {
+                    alert(jqXHR.responseText);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert("error");
+                }
+            })
+        });
+    </script>
+</body>
+</html>

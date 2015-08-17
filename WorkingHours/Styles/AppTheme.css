@@ -1,0 +1,25 @@
+﻿html,body{padding:0; margin:0; height:100%;}
+
+header { width: 100%; display:table; background-color: #e6e7e8; color: #595a5f; font-size: 25px;  line-height: 40px;}
+
+.blue_gradient_white { background: radial-gradient(circle,#5fb1e1,#4690ce); }
+.wh_con {height: 100%; font-family: Arial; color: #fff; text-align: center; }
+.main_content {width:100%; height:100%; position:relative;}
+
+.footer { width: 100%; height: 10%; background-color: #777d80; position: fixed; bottom:0; text-align:center;}
+.footer .item { width: 25%; height: 100%; float: left;}
+.footer .sprite { background-image:url(../Images/footer_sptite_s.png); background-repeat:no-repeat;}
+.footer .timer { background-position: 15px 1px; width:65px; height:40px; margin:auto;}
+.footer .graph { background-position: -39px 1px; width: 65px; height: 40px; margin: auto; }
+.footer .table { background-position: -102px 1px; width: 65px; height: 40px; margin: auto; }
+.footer .settings { background-position: -160px 1px; width: 65px; height: 40px; margin: auto; }
+.footer .footer_text { font-size:12px;}
+
+.main_content .monthlist { width: 50%; height: 5%; margin: auto; background-color: #EDEDED; border-radius: 40px; font-size: 20px; color: #595A5F; position: relative; top: 2%; }
+.main_content .monthlist .arrow.top { width: 0; height: 0; border-style: solid; border-width: 0 10px 10px 10px; border-color: transparent transparent #595A5F transparent; margin: 10px 10px; }
+.main_content .monthlist .arrow.bottom { width: 0; height: 0; border-style: solid; border-width: 10px 10px 0 10px; border-color: #595A5F transparent transparent transparent; margin: 10px 10px; }
+.main_content .monthlist .space { width: 1%; height: 65%; border-right: 2px solid #595A5F; margin-top: 6px; }
+.main_content .monthlist .monthname { font-size: 15px; font-weight: 600; text-align: center; margin: 7px 10px; }
+.main_content .list { width: 50%; height: 30%; border: 1px solid #fff; margin: -6% auto; background-color: #EDEDED; color: #595A5F; z-index: 5; display: none; }
+.main_content .list ul { margin: 0; padding: 0; font-size: 12px; }
+.main_content .list ul li{list-style-type:none;}
